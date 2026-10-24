@@ -15,7 +15,7 @@
 Windows용 Unity ↔ Unreal 프로젝트 포팅 도구입니다. 장면·리소스와 지원 스크립트를 대상 엔진의 객체로 변환하고, 원본과 결과의 대응 관계를 보고서로 남깁니다.
 
 <p align="center">
-  <img src="docs/assets/engine-migration-illustration.png" width="800" alt="같은 게임 장면을 Unity와 Unreal 플랫폼 사이에서 옮기는 양방향 다리와 에셋·코드 일러스트">
+  <img src="docs/assets/engine-migration-illustration.png" width="800" alt="Unity와 Unreal 로고가 각 씬·레벨 플랫폼 앞에 겹쳐 있고 에셋·코드가 양방향 다리로 이동하는 일러스트">
 </p>
 <p align="center"><sub>지원 항목의 변환을 설명하는 개념 일러스트이며, 렌더링 외형의 동등성을 보장하지 않습니다.</sub></p>
 **개발 프리뷰입니다.** 전체 게임·임의 코드·모든 엔진 버전의 자동 포팅은 아직 완성되지 않았습니다. 지원하지 않는 항목은 차단 사유로 기록합니다.

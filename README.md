@@ -15,7 +15,7 @@
 A Windows tool for porting projects between **Unity and Unreal Engine**. Convert supported scenes, assets and scripts into objects in the target engine, with reports that map the originals to their results.
 
 <p align="center">
-  <img src="docs/assets/engine-migration-illustration.png" width="800" alt="Illustration of the same small game scene on Unity and Unreal platforms, connected by a two-way bridge carrying assets and code">
+  <img src="docs/assets/engine-migration-illustration.png" width="800" alt="Unity and Unreal logo badges overlap their scene platforms, connected by a two-way bridge carrying assets and code">
 </p>
 <p align="center"><sub>Concept illustration of supported content migration; visual equivalence is not guaranteed.</sub></p>
 
