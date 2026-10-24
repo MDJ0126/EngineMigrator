@@ -24,7 +24,7 @@ A Windows tool for porting projects between **Unity and Unreal Engine**. Convert
 ## How it works
 
 <p align="center">
-  <img src="docs/assets/migration-flow.svg" width="900" alt="Unity ↔ EngineMigrator ↔ Unreal: inspect and convert supported content in separate copies, then review object mappings and result reports">
+  <img src="docs/assets/migration-flow.en.svg" width="900" alt="Unity ↔ EngineMigrator ↔ Unreal: inspect and convert supported content in separate copies, then review object mappings and result reports">
 </p>
 
 ## Features
