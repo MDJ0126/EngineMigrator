@@ -1,0 +1,8 @@
+Engine migration illustration
+
+Generated with the built-in image_gen tool on 2026-10-24.
+File: engine-migration-illustration.png
+Concept art, not an application screenshot or evidence of rendering equivalence.
+
+Prompt:
+Create a beautiful minimal editorial isometric illustration for the README of EngineMigrator, a Unity ↔ Unreal project migration tool. Wide landscape 1536x1024 composition. Refined monochrome palette: pearl white, graphite charcoal, silver, neutral gray. No orange purple blue or saturated colors. Two floating rounded square diorama platforms connected by an elegant broad two-way ribbon bridge with arrows: on the LEFT a pearl-white Unity-side stylized game scene, on the RIGHT a charcoal Unreal-side rendition of the SAME scene. Each scene contains the exact same little low-poly pine tree, stepped stone arch, cube and sphere in the same layout, demonstrating transferring scene objects between engines. Small floating asset cards with generic mesh cube, image and code glyphs move across bridge. Soft studio light, restrained ambient occlusion, tasteful paper/clay material, clean off-white background, excellent spacious composition, friendly and premium developer tooling illustration. Legible English labels only: 'Unity' under left platform, 'Unreal' under right platform, 'EngineMigrator' discreetly centered beneath bridge. Do not draw official engine logos. No app screenshot, no performance claims, no other text. Make conversion between two engines immediately understandable.

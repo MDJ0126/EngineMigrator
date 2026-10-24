@@ -1,36 +1,44 @@
 <p align="center">
-  <img src="docs/assets/enginemigrator-logo.png" width="96" alt="EngineMigrator 양방향 이동 로고">
+  <img src="docs/assets/enginemigrator-logo.png" width="96" alt="EngineMigrator bidirectional migration logo">
 </p>
 <h1 align="center">EngineMigrator</h1>
-<p align="center"><strong>Unity ↔ Unreal, 프로젝트를 잇다.</strong></p>
+<p align="center"><strong>Bridging projects between Unity and Unreal.</strong></p>
+<p align="center"><strong>English</strong> &nbsp; <a href="README.ko.md"><img src="https://img.shields.io/badge/한국어-README-35383D?style=flat-square" alt="한국어 README로 전환"></a></p>
 <p align="center">
-  <a href="docs/guide.html">사용 가이드</a> &middot;
-  <a href="docs/development-status.md">지원 범위 · 검증 기록</a> &middot;
-  <a href="#시작하기">시작하기</a>
+  <a href="docs/guide.html">User guide (한국어)</a> &middot;
+  <a href="docs/development-status.md">Support &amp; validation (한국어)</a> &middot;
+  <a href="#getting-started">Getting started</a>
 </p>
 
 ---
 
-Windows용 Unity ↔ Unreal 프로젝트 포팅 도구입니다. 장면·리소스와 지원 스크립트를 대상 엔진의 객체로 변환하고, 원본과 결과의 대응 관계를 보고서로 남깁니다.
-
-**개발 프리뷰입니다.** 전체 게임·임의 코드·모든 엔진 버전의 자동 포팅은 아직 완성되지 않았습니다. 지원하지 않는 항목은 차단 사유로 기록합니다.
+A Windows tool for porting projects between **Unity and Unreal Engine**. Convert supported scenes, assets and scripts into objects in the target engine, with reports that map the originals to their results.
 
 <p align="center">
-  <img src="docs/assets/migration-flow.svg" width="900" alt="Unity ↔ EngineMigrator ↔ Unreal: 독립 복사본에서 지원 항목을 변환하고 객체·참조 대응표와 결과 보고서를 확인하는 흐름">
+  <img src="docs/assets/engine-migration-illustration.png" width="800" alt="Illustration of the same small game scene on Unity and Unreal platforms, connected by a two-way bridge carrying assets and code">
+</p>
+<p align="center"><sub>Concept illustration of supported content migration; visual equivalence is not guaranteed.</sub></p>
+
+**Development preview.** Automatic conversion of entire games, arbitrary code and every engine version is not complete. Unsupported content is reported with a blocking reason.
+
+## How it works
+
+<p align="center">
+  <img src="docs/assets/migration-flow.svg" width="900" alt="Unity ↔ EngineMigrator ↔ Unreal: inspect and convert supported content in separate copies, then review object mappings and result reports">
 </p>
 
-## 주요 기능
+## Features
 
-- **장면과 리소스** — 계층·Transform, 기본 메시·텍스처·머티리얼, 카메라·조명과 일부 환경 설정 이전
-- **스크립트와 참조** — 지원하는 MonoBehaviour ↔ Runtime Actor 변환, 직렬화 값·객체 참조·상속·생명주기 처리
-- **프로젝트 왕복** — 지원 장면·프리팹의 변환과 복원, 원본 ID·리소스·참조 대응표 제공
-- **독립 복사본 작업** — 원본·대상 프로젝트를 보존하고 결과 폴더 아래의 복사본에서 처리
+- **Scenes and assets** — Transfer hierarchies, transforms, basic meshes, textures and materials, cameras, lights and selected environment settings.
+- **Scripts and references** — Convert supported MonoBehaviour ↔ Runtime Actor code, including serialized values, object references, inheritance and lifecycle behavior.
+- **Project roundtrips** — Convert and restore supported scenes and prefabs, with mappings for original IDs, assets and references.
+- **Separate working copies** — Preserve the source and target projects; process copies inside the output folder.
 
-세부 지원 조건과 제한은 [사용 가이드](docs/guide.html) 및 [개발·검증 기록](docs/development-status.md)을 확인해 주세요. 일반 게임플레이·렌더링·물리·패키징 전체의 동등성은 보장하지 않습니다.
+See the [user guide](docs/guide.html) and [development and validation notes](docs/development-status.md) for detailed conditions and limitations. These documents are currently in Korean. Full gameplay, rendering, physics and packaging equivalence is not guaranteed.
 
-## 시작하기
+## Getting started
 
-Windows와 .NET 9 SDK / Windows Desktop 런타임이 필요합니다. 실제 변환에는 프로젝트와 일치하는 Unity·Unreal 버전이 설치되어 있어야 하며, Unreal C++ 생성에는 호환되는 Visual Studio C++ 빌드 도구가 필요합니다.
+Requires **Windows**, the **.NET 9 SDK** and the **Windows Desktop runtime**. Conversion also requires installed Unity and Unreal versions matching your projects. Unreal C++ generation requires compatible Visual Studio C++ build tools.
 
 ```powershell
 git clone https://github.com/MDJ0126/EngineMigrator.git
@@ -38,15 +46,16 @@ cd EngineMigrator
 ./Start-EngineMigrator.ps1
 ```
 
-앱에서 원본·대상 프로젝트와 변환 방향을 선택하고 **사전 검사 → 장면·리소스 포팅 → 변환 대응표 확인** 순서로 진행합니다. 공개 설치 패키지 대신 현재는 소스에서 실행합니다.
+In the app, select the source and target projects and the conversion direction. Follow **preflight inspection → scene and asset porting → review conversion mappings**. Run from source for now; a public installer is not provided.
 
-> 이 체크아웃에는 엔진 실행 사고 방지 가드가 포함되어 있습니다. 앱 실행과 실제 엔진 실행은 별개이며, 엔진 작업은 안전 사전 검사와 허용된 실행 경로를 충족해야 합니다. 자세한 운영 제한은 [AGENTS.md](AGENTS.md)를 확인해 주세요.
+> This checkout includes engine execution safeguards following a security-dialog incident. Starting the app and launching an engine are separate operations. Engine tasks require safety preflight checks and an allowed execution path. See [AGENTS.md](AGENTS.md) for operational restrictions.
 
-## 문서
+## Documentation
 
-| 문서 | 내용 |
+| Document | Contents |
 | --- | --- |
-| [사용 가이드](docs/guide.html) | 사용 흐름, 변환 대응표, 제한과 문제 해결. HTML 파일을 내려받아 브라우저에서 열어 보세요. |
-| [개발·검증 기록](docs/development-status.md) | 세부 기능, 기존 실행 검증 범위, 미완료 항목과 개발 명령 |
+| [User guide (한국어)](docs/guide.html) | Workflow, conversion mappings, limitations and troubleshooting. Download the HTML file and open it in a browser. |
+| [Development and validation notes (한국어)](docs/development-status.md) | Detailed support, previous execution checks, unfinished work and development commands. |
+| [한국어 README](README.ko.md) | Korean introduction and setup instructions. |
 
-기존 실행 검증 환경은 Unity **6000.0.83f1**, Unreal **5.8.1 / 5.5.4**입니다. 해당 환경의 제한된 사례에 대한 기록이며, 모든 프로젝트와 버전의 호환성을 의미하지 않습니다.
+Previously tested environments include Unity **6000.0.83f1** and Unreal **5.8.1 / 5.5.4**. These records cover limited cases in those environments, not compatibility with all projects or versions.
