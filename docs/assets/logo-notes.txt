@@ -1,9 +1,12 @@
 EngineMigrator logo
 
-Generated and recolored with the built-in image_gen tool on 2026-10-24.
-Current palette: orchid purple #A855C7 and lavender #DDB9EB. Transparent PNG.
-Reference review: CodeAssist (yellow), DesignDataTable (green), WindowsFolderSize (blue).
-Orange was excluded at the user's request because another project uses it.
+Edited with the built-in image_gen tool on 2026-10-24.
+Palette: graphite #35383D, gray #787E87, pearl #F4F5F7, silver #B5BAC2.
+An independent monochrome interpretation inspired by Unity and Unreal; these shades are design choices, not asserted official brand color codes.
+References:
+https://unity.com/legal/branding-trademarks
+https://www.unrealengine.com/en-US/branding
+https://cdn2.unrealengine.com/BrandingMedia/Documents/UE4Styleguide-455099555.pdf (historical UE4 guide)
 
-Recolor prompt:
-Edit this exact EngineMigrator logo by changing ONLY its color palette. Preserve the two interlocking isometric arrows, exact silhouette, proportions, composition, negative space, shading and transparent background. Replace all orange/coral/persimmon colors with orchid purple #A855C7 and lighter lavender #DDB9EB. No orange, no blue, no yellow, no green. Clean transparent PNG. No text or extra objects.
+Prompt:
+Recolor ONLY this exact two-arrow EngineMigrator logo into an elegant monochrome black/white/silver palette inspired by Unity and Unreal's monochrome visual identities. Preserve exact geometry, composition and transparent background. Upper arrow is graphite charcoal #35383D with medium gray side face #787E87. Lower arrow is pearl white #F4F5F7 with silver side face #B5BAC2. Subtle thin neutral gray edge for visibility on both white and dark README backgrounds. Two distinctly contrasting arrows. Absolutely no purple or other chromatic hues, no blue orange yellow green. No text, no official Unity or Unreal logo added. Transparent PNG.
