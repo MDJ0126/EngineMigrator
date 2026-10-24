@@ -1,9 +1,9 @@
 EngineMigrator logo
 
-Generated with the built-in image_gen tool on 2026-10-24.
-Palette: warm coral / persimmon and peach. Transparent PNG.
+Generated and recolored with the built-in image_gen tool on 2026-10-24.
+Current palette: orchid purple #A855C7 and lavender #DDB9EB. Transparent PNG.
 Reference review: CodeAssist (yellow), DesignDataTable (green), WindowsFolderSize (blue).
-Color choice is relative to these reviewed projects, not a claim of worldwide exclusivity.
+Orange was excluded at the user's request because another project uses it.
 
-Prompt:
-Create a beautifully minimal professional app logo for EngineMigrator, a Unity to Unreal bidirectional project migration tool. Symbol only, no text or letters. Two elegantly interlocking geometric bent arrows forming a compact isometric hexagon / bridge, communicating exchange and continuity. Warm coral / persimmon #E76F51 with a subtle lighter peach face, no blue, no green, no yellow. Flat precise vector-like silhouette, slightly rounded corners, generous negative space, extremely legible at 64px. Centered square composition, symbol fills 78 percent of canvas. Actually transparent background. No shadows, no glossy effects, no mockup, no border, no watermark. Save as a polished PNG logo.
+Recolor prompt:
+Edit this exact EngineMigrator logo by changing ONLY its color palette. Preserve the two interlocking isometric arrows, exact silhouette, proportions, composition, negative space, shading and transparent background. Replace all orange/coral/persimmon colors with orchid purple #A855C7 and lighter lavender #DDB9EB. No orange, no blue, no yellow, no green. Clean transparent PNG. No text or extra objects.
