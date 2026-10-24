@@ -1,0 +1,1 @@
+2026-10-23: User reported repeated Unreal security dialogs interrupting other work. Engine launching is blocked pending diagnosis. Do not auto-retry or remove this marker.

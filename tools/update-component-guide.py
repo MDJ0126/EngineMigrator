@@ -1,0 +1,7 @@
+from pathlib import Path
+p=Path(__file__).resolve().parents[1]/'docs/guide.html';s=p.read_text(encoding='utf-8')
+s=s.replace('<code>AddComponent</code>·<code>GetComponent</code>의 일반 변환과 Component 복제는 미지원입니다.','사용자 MonoBehaviour의 제네릭 AddComponent/GetComponent를 지원합니다. 일반 엔진 컴포넌트와 Component 자체 복제는 미지원입니다.')
+marker='<h3>빈 객체 생성과 런타임 초기화</h3>'
+addition='''<h3>동적 MonoBehaviour와 컴포넌트 참조</h3><p><code>GameObject.AddComponent&lt;사용자클래스&gt;()</code>와 <code>GetComponent&lt;사용자클래스&gt;()</code>를 추가했습니다. 컴포넌트는 소유 GameObject에 붙은 런타임 Actor로 생성하며, 조회는 상속 관계와 컴포넌트 순서를 적용해 첫 일치 항목을 반환합니다. 장면에 붙어 있지 않은 사용자 컴포넌트 클래스도 컴파일된 타입 참조를 따라 수집합니다.</p><p>사용자 MonoBehaviour 타입 필드를 별도 컴포넌트 ID로 저장합니다. 모든 객체·컴포넌트를 만든 뒤 참조를 연결하므로 앞/뒤 방향과 순환 참조를 복원할 수 있습니다. 컴포넌트 필드 읽기·단순 대입과 지원 숫자 연산, public 함수의 기본형·GameObject 인수/반환을 네이티브 프로퍼티와 UFunction 호출에 연결합니다. 가상 함수 오버라이드도 적용합니다. 지원 타입의 <code>var</code> 지역 변수는 의미 분석으로 타입을 결정해 명시적 타입과 같은 C++ 코드로 변환합니다.</p><p>Update에서 동적 생성한 경우 AddComponent 반환 시 Awake가 끝나고 Start는 아직 실행되지 않는 순서를 대조했습니다. 같은 프레임 후반에 Start가 실행되고 첫 Update는 다음 프레임부터 실행됩니다. 컴포넌트 단독 삭제와 GameObject 계층 복제를 처리하며 파괴된 컴포넌트와 null 변수 비교를 보강했습니다.</p><p>실행 검증 범위는 활성 사용자 컴포넌트, Update 중 생성, int·float·double·bool 반환과 GameObject 전달, 상속 조회·순환 참조입니다. 엔진 컴포넌트·배열 조회·일반 Component 복제·OnEnable/OnDisable·비활성/활성 토글·벡터나 사용자 컴포넌트 타입의 함수 인수/반환은 미지원입니다. Awake/Start 중 생성과 장시간 GC 이후의 모든 참조 동등성은 미검증이며, 전체 생명주기 동등성을 뜻하지 않습니다.</p>'''
+if addition not in s:s=s.replace(marker,addition+marker)
+p.write_text(s,encoding='utf-8');print('RUNTIME_COMPONENT_GUIDE_UPDATED')

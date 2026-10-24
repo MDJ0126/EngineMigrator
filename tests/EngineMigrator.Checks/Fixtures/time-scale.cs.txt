@@ -1,0 +1,17 @@
+using UnityEngine;
+public class TimeScaleActor:MonoBehaviour {
+ public int Frame;
+ public int Fixeds;
+ public int Starts;
+ public float ScaleBefore;
+ public float ScaleAfter;
+ public float UpdateDelta;
+ public float FixedDelta;
+ public float UpdateElapsed;
+ public float FixedElapsed;
+ protected virtual void Start(){Starts++;}
+ protected virtual void FixedUpdate(){Fixeds++;FixedDelta=Time.deltaTime;FixedElapsed+=Time.deltaTime;}
+ protected virtual void Update(){Frame++;ScaleBefore=Time.timeScale;UpdateDelta=Time.deltaTime;UpdateElapsed+=Time.deltaTime;if(Frame==4)Time.timeScale=.5f;if(Frame==8)Time.timeScale=0f;if(Frame==12)Time.timeScale=2f;if(Frame==16)Time.timeScale=1f;if(Frame==18)Time.timeScale=-1f;ScaleAfter=Time.timeScale;}
+}
+
+public class TimeScalePeer:MonoBehaviour { public int Frames;public int Fixeds;public float SeenScale;public float SeenDelta;protected virtual void FixedUpdate(){Fixeds++;}protected virtual void Update(){Frames++;SeenScale=Time.timeScale;SeenDelta=Time.deltaTime;} }

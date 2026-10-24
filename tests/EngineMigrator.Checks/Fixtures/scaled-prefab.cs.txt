@@ -1,0 +1,35 @@
+using UnityEngine;
+public class ScaledPrefabDriver:MonoBehaviour {
+ public int Frame;public float Scale;public float Delta;public bool Distinct;public bool TemplateQuiet;public int ReturnedAwakes;public int ReturnedStarts;public int ReturnedSleepAwakes;
+ public GameObject ActivePrefab;public GameObject DormantPrefab;public GameObject First;public GameObject Second;public GameObject Third;public GameObject Copied;public GameObject Sleeping;
+ public ScaledPrefabWorker A;public ScaledPrefabWorker B;public ScaledPrefabWorker C;public ScaledPrefabWorker Copy;public ScaledPrefabWorker Sleep;
+ protected virtual void Update(){Frame++;
+ if(Frame==2){First=Instantiate(ActivePrefab);A=First.GetComponent<ScaledPrefabWorker>();ReturnedAwakes=A.Awakes;ReturnedStarts=A.Starts;}
+ if(Frame==3){Second=Instantiate(ActivePrefab);B=Second.GetComponent<ScaledPrefabWorker>();Distinct=A!=B&&A.Peer!=B.Peer&&A.Target!=B.Target;}
+ if(Frame==4)Time.timeScale=0f;
+ if(Frame==5){Third=Instantiate(ActivePrefab);C=Third.GetComponent<ScaledPrefabWorker>();}
+ if(Frame==6){Copied=Instantiate(First);Copy=Copied.GetComponent<ScaledPrefabWorker>();}
+ if(Frame==7){Sleeping=Instantiate(DormantPrefab);Sleep=Sleeping.GetComponent<ScaledPrefabWorker>();ReturnedSleepAwakes=Sleep.Awakes;}
+ if(Frame==8)Sleeping.SetActive(true);
+ if(Frame==9)Second.SetActive(false);
+ if(Frame==10)Destroy(First);
+ if(Frame==11)Time.timeScale=2f;
+ if(Frame==12)Second.SetActive(true);
+ if(Frame==14)Destroy(Sleeping);
+ if(Frame==18){Destroy(Third);Destroy(Copied);}
+ if(Frame==22)Destroy(Second);
+ var template=ActivePrefab.GetComponent<ScaledPrefabWorker>();TemplateQuiet=template.Awakes==0&&template.Enables==0&&template.Starts==0&&template.Updates==0&&template.Fixeds==0;
+ Scale=Time.timeScale;Delta=Time.deltaTime;
+ }
+}
+public class ScaledPrefabWorker:MonoBehaviour {
+ public int Awakes;public int Enables;public int Starts;public int Updates;public int Fixeds;public int Disables;public int Id;
+ public float AwakeScale;public float StartScale;public float Scale;public float Delta;public float Elapsed;public bool RefsInAwake;
+ public GameObject Self;public GameObject Target;public ScaledPrefabWorker Peer;
+ protected virtual void Awake(){Awakes++;AwakeScale=Time.timeScale;RefsInAwake=Self==gameObject&&Peer!=null&&Peer.Peer==this&&Target==Peer.gameObject;}
+ protected virtual void OnEnable(){Enables++;}
+ protected virtual void Start(){Starts++;StartScale=Time.timeScale;}
+ protected virtual void FixedUpdate(){Fixeds++;Elapsed+=Time.deltaTime;}
+ protected virtual void Update(){Updates++;Scale=Time.timeScale;Delta=Time.deltaTime;}
+ protected virtual void OnDisable(){Disables++;}
+}

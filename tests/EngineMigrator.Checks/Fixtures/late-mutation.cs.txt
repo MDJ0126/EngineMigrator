@@ -1,0 +1,29 @@
+using UnityEngine;
+public class LateMutationLedger:MonoBehaviour {public int Code;public int Calls;public int DestroyEvents;public void Record(int id){Code=(Code*31+id)%1000003;Calls++;}}
+public class LateMutationWorker:MonoBehaviour {
+ public LateMutationLedger Ledger;public int Starts;public int Updates;public int Lates;public int Enables;public int Disables;
+ protected virtual void OnEnable(){Enables++;}
+ protected virtual void Start(){Starts++;}
+ protected virtual void Update(){Updates++;Ledger.Record(11);}
+ protected virtual void LateUpdate(){Lates++;Ledger.Record(12);}
+ protected virtual void OnDisable(){Disables++;}
+ protected virtual void OnDestroy(){if(Ledger!=null){Ledger.DestroyEvents++;Ledger.Record(13);}}
+}
+public class LateMutationController:MonoBehaviour {
+ public int Frame;public LateMutationLedger Ledger;public GameObject FirstOwner;public GameObject CloneOwner;public GameObject LastOwner;public LateMutationWorker First;public LateMutationWorker Copy;public LateMutationWorker Last;public int ReturnedStarts;public int ReturnedLates;
+ protected virtual void Update(){Frame++;Ledger.Record(1);}
+ protected virtual void LateUpdate(){Ledger.Record(2);
+ if(Frame==2){FirstOwner=new GameObject("Late created");First=FirstOwner.AddComponent<LateMutationWorker>();First.Ledger=Ledger;ReturnedStarts=First.Starts;ReturnedLates=First.Lates;}
+ if(Frame==4){CloneOwner=Instantiate(FirstOwner);Copy=CloneOwner.GetComponent<LateMutationWorker>();ReturnedStarts=Copy.Starts;ReturnedLates=Copy.Lates;}
+ if(Frame==6)First.enabled=false;
+ if(Frame==8)First.enabled=true;
+ if(Frame==10)FirstOwner.SetActive(false);
+ if(Frame==12)FirstOwner.SetActive(true);
+ if(Frame==14)Destroy(FirstOwner);
+ if(Frame==16)Destroy(CloneOwner);
+ if(Frame==18){LastOwner=new GameObject("Late last");Last=LastOwner.AddComponent<LateMutationWorker>();Last.Ledger=Ledger;ReturnedStarts=Last.Starts;ReturnedLates=Last.Lates;}
+ if(Frame==20)Destroy(Last);
+ if(Frame==22)Destroy(LastOwner);
+ }
+}
+

@@ -1,0 +1,41 @@
+using UnityEngine;
+using UnityEngine.UI;
+public class AuditDynamicUI:MonoBehaviour {
+ public int Frame;
+ public bool Existing;
+ public GameObject Owner;
+ public Canvas FirstCanvas;
+ public Canvas SecondCanvas;
+ public Button FirstButton;
+ public Button SecondButton;
+ public GameObject Copy;
+ public AuditDynamicUI Copied;
+ public bool Added;
+ public bool DuplicateCanvasNull;
+ public bool DuplicateButtonNull;
+ public bool DestroyImmediate;
+ public bool RemovedNext;
+ public bool Readded;
+ public bool OldStaysNull;
+ public bool NewDifferent;
+ public bool ButtonKept;
+ public bool PropertyState;
+ public bool OwnerSame;
+ public bool CloneRefs;
+ public bool CloneProperties;
+ public bool OldDestroySafe;
+ public bool ButtonReadded;
+ public bool ButtonOldNull;
+ public bool ButtonDifferent;
+ protected virtual void Update(){
+  Frame++;
+  if(Frame==2){if(Existing){FirstCanvas=Owner.GetComponent<Canvas>();FirstButton=Owner.GetComponent<Button>();}else{FirstCanvas=Owner.AddComponent<Canvas>();FirstButton=Owner.AddComponent<Button>();}Added=FirstCanvas!=null&&FirstButton!=null;}
+  if(Frame==3){Canvas duplicate=Owner.AddComponent<Canvas>();DuplicateCanvasNull=duplicate==null;Button buttonDuplicate=Owner.AddComponent<Button>();DuplicateButtonNull=buttonDuplicate==null;}
+  if(Frame==4){Destroy(FirstCanvas);DestroyImmediate=FirstCanvas!=null;}
+  if(Frame==5){RemovedNext=FirstCanvas==null;SecondCanvas=Owner.AddComponent<Canvas>();Readded=SecondCanvas!=null;OldStaysNull=FirstCanvas==null;NewDifferent=FirstCanvas!=SecondCanvas;ButtonKept=FirstButton!=null;SecondCanvas.enabled=false;FirstButton.interactable=false;PropertyState=!SecondCanvas.enabled&&!FirstButton.interactable;OwnerSame=SecondCanvas.gameObject==Owner&&FirstButton.gameObject==Owner;}
+  if(Frame==6){Copy=Instantiate(Owner);Copied=Copy.GetComponent<AuditDynamicUI>();CloneRefs=Copied.SecondCanvas!=null&&Copied.SecondCanvas!=SecondCanvas&&Copied.FirstCanvas==null&&Copied.FirstButton!=FirstButton&&Copied.Owner==Copy;CloneProperties=!Copied.SecondCanvas.enabled&&!Copied.FirstButton.interactable;}
+  if(Frame==7){Destroy(FirstCanvas);OldDestroySafe=SecondCanvas!=null;}
+  if(Frame==8){Destroy(FirstButton);}
+  if(Frame==9){SecondButton=Owner.AddComponent<Button>();ButtonReadded=SecondButton!=null&&SecondButton.enabled&&SecondButton.interactable;ButtonOldNull=FirstButton==null;ButtonDifferent=FirstButton!=SecondButton;}
+ }
+}

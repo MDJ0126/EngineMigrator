@@ -1,0 +1,19 @@
+using UnityEngine;
+public class LateLedger:MonoBehaviour {public int Code;public int Calls;public void Record(int id){Code=(Code*31+id)%1000003;Calls++;}}
+public class LateBase:MonoBehaviour {
+ public LateLedger Ledger;public int Starts;public int Updates;public int Lates;public float LateDelta;public float LateElapsed;public bool StartedBeforeLate=true;
+ protected virtual void Start(){Starts++;}
+ protected virtual void Update(){Updates++;Ledger.Record(1);}
+ protected virtual void LateUpdate(){Lates++;LateDelta=Time.deltaTime;LateElapsed+=Time.deltaTime;StartedBeforeLate=StartedBeforeLate&&Starts==1;Ledger.Record(2);}
+}
+public class LateWorker:LateBase {
+ public int DerivedUpdates;public int DerivedLates;
+ protected override void Update(){base.Update();DerivedUpdates++;Ledger.Record(3);}
+ protected override void LateUpdate(){base.LateUpdate();DerivedLates++;Ledger.Record(4);}
+}
+public class LateController:MonoBehaviour {
+ public int Frame;public LateLedger Ledger;public LateWorker Worker;public GameObject Owner;public GameObject AddedOwner;public LateWorker Added;public float Delta;public float Scale;
+ protected virtual void Update(){Frame++;Ledger.Record(5);if(Frame==4)Worker.enabled=false;if(Frame==7)Worker.enabled=true;if(Frame==10)Owner.SetActive(false);if(Frame==13)Owner.SetActive(true);if(Frame==15){Worker.enabled=false;AddedOwner=new GameObject("Added late worker");Added=AddedOwner.AddComponent<LateWorker>();Added.Ledger=Ledger;}if(Frame==17)Time.timeScale=0f;if(Frame==20)Time.timeScale=1f;if(Frame==21)Destroy(AddedOwner);if(Frame==23)Destroy(Owner);Delta=Time.deltaTime;Scale=Time.timeScale;}
+}
+
+public class LateTail:MonoBehaviour {public LateLedger Ledger;public int Updates;public int Lates;protected virtual void Update(){Updates++;Ledger.Record(6);}protected virtual void LateUpdate(){Lates++;Ledger.Record(7);}}

@@ -1,0 +1,23 @@
+using UnityEngine;
+public class PhaseChainLedger:MonoBehaviour {public int Code;public int Calls;public void Record(int id){Code=(Code*31+id)%1000003;Calls++;}}
+public class PhaseChainLeaf:MonoBehaviour {
+ public PhaseChainLedger Ledger;public int Id;public int Starts;public int Updates;public int Lates;public int Enables;public int Disables;
+ protected virtual void OnEnable(){Enables++;if(Ledger!=null)Ledger.Record(Id*10+1);}
+ protected virtual void OnDisable(){Disables++;if(Ledger!=null)Ledger.Record(Id*10+2);}
+ protected virtual void Start(){Starts++;Ledger.Record(Id*10+3);}
+ protected virtual void Update(){Updates++;Ledger.Record(Id*10+4);}
+ protected virtual void LateUpdate(){Lates++;Ledger.Record(Id*10+5);}
+}
+public class PhaseChainSpawner:MonoBehaviour {
+ public PhaseChainLedger Ledger;public int Id;public bool Armed;public bool EmitStart;public bool EmitEnable;public int Starts;public int Updates;public int Lates;public int Enables;public int Disables;public int ReturnedStart;public int ReturnedEnable;public GameObject StartOwner;public GameObject EnableOwner;public PhaseChainLeaf StartLeaf;public PhaseChainLeaf EnableLeaf;
+ protected virtual void OnEnable(){Enables++;if(Armed){Ledger.Record(Id*10+3);if(EmitEnable){if(EnableOwner!=null)Destroy(EnableOwner);EnableOwner=new GameObject("Enable leaf");EnableLeaf=EnableOwner.AddComponent<PhaseChainLeaf>();EnableLeaf.Ledger=Ledger;EnableLeaf.Id=Id*10+2;ReturnedEnable=EnableLeaf.Starts;}}}
+ protected virtual void OnDisable(){Disables++;if(Armed)Ledger.Record(Id*10+4);}
+ protected virtual void Start(){Starts++;Ledger.Record(Id*10+1);if(EmitStart){StartOwner=new GameObject("Start leaf");StartLeaf=StartOwner.AddComponent<PhaseChainLeaf>();StartLeaf.Ledger=Ledger;StartLeaf.Id=Id*10+1;ReturnedStart=StartLeaf.Starts;}}
+ protected virtual void Update(){Updates++;Ledger.Record(Id*10+2);}
+ protected virtual void LateUpdate(){Lates++;Ledger.Record(Id*10+5);}
+}
+public class PhaseChainController:MonoBehaviour {
+ public PhaseChainLedger Ledger;public int Frame;public GameObject PrimaryOwner;public GameObject LateOwner;public PhaseChainSpawner Primary;public PhaseChainSpawner LateAdded;
+ protected virtual void Update(){Frame++;Ledger.Record(1);if(Frame==2){PrimaryOwner=new GameObject("Update spawner");Primary=PrimaryOwner.AddComponent<PhaseChainSpawner>();Primary.Ledger=Ledger;Primary.Id=1;Primary.Armed=true;Primary.EmitStart=true;Primary.EmitEnable=true;}if(Frame==4)Primary.enabled=false;if(Frame==5)Primary.enabled=true;if(Frame==14)LateAdded.enabled=false;}
+ protected virtual void LateUpdate(){Ledger.Record(2);if(Frame==8){Primary.enabled=false;Primary.enabled=true;}if(Frame==10){PrimaryOwner.SetActive(false);PrimaryOwner.SetActive(true);}if(Frame==12){LateOwner=new GameObject("Late spawner");LateAdded=LateOwner.AddComponent<PhaseChainSpawner>();LateAdded.Ledger=Ledger;LateAdded.Id=2;LateAdded.Armed=true;LateAdded.EmitStart=true;LateAdded.EmitEnable=true;}if(Frame==15)LateAdded.enabled=true;if(Frame==16){LateAdded.enabled=false;LateAdded.enabled=true;}if(Frame==18){LateOwner.SetActive(false);LateOwner.SetActive(true);}if(Frame==20)Destroy(PrimaryOwner);if(Frame==22)Destroy(LateOwner);}
+}

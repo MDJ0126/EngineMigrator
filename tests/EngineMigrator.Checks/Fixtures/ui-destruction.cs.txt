@@ -1,0 +1,16 @@
+using UnityEngine;
+using UnityEngine.UI;
+public class AuditUIDestruction:MonoBehaviour {
+ public int Frame;public Canvas Panel;public Button Action;public GameObject UIOwner;
+ public bool CanvasImmediate;public bool CanvasGone;public bool ButtonKept;public bool ButtonImmediate;public bool ButtonGone;public bool OwnerKept;public bool CanvasLookupGone;public bool ButtonLookupGone;
+ public GameObject Copy;public AuditUIDestruction Copied;public bool CloneCanvasMissing;public bool CloneButtonMissing;public bool CanvasOriginalEqualsClone;public bool ButtonOriginalEqualsClone;
+ public GameObject EarlyCopy;public AuditUIDestruction Early;public bool EarlyCanvasAlive;public bool EarlyCanvasGone;
+ void Update(){
+  Frame++;
+  if(Frame==2){Destroy(Panel);Destroy(Panel);CanvasImmediate=Panel;EarlyCopy=Instantiate(UIOwner);Early=EarlyCopy.GetComponent<AuditUIDestruction>();EarlyCanvasAlive=Early.Panel;}
+  if(Frame==3){CanvasGone=!Panel;ButtonKept=Action;OwnerKept=UIOwner;Canvas canvas=UIOwner.GetComponent<Canvas>();CanvasLookupGone=canvas==null;if(Early!=null)Destroy(Early.Panel);}
+  if(Frame==4){Destroy(Action);Destroy(Action);ButtonImmediate=Action;if(Early!=null)EarlyCanvasGone=!Early.Panel;}
+  if(Frame==5){ButtonGone=!Action;OwnerKept=UIOwner;Button button=UIOwner.GetComponent<Button>();ButtonLookupGone=button==null;}
+  if(Frame==6){Copy=Instantiate(UIOwner);Copied=Copy.GetComponent<AuditUIDestruction>();CloneCanvasMissing=Copied.Panel==null;CloneButtonMissing=Copied.Action==null;CanvasOriginalEqualsClone=Panel==Copied.Panel;ButtonOriginalEqualsClone=Action==Copied.Action;}
+ }
+}

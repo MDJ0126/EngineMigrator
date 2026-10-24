@@ -1,0 +1,5 @@
+public static class EMIntegratedPhaseRead {
+ static int Read(object o,string n){return Convert.ToInt32(o.GetType().GetField(n).GetValue(o));}
+ static Component Ref(Component o,string n){return o?(Component)o.GetType().GetField(n).GetValue(o):null;}
+ public static List<int> Capture(){var control=UnityEngine.Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).FirstOrDefault(b=>b.GetType().Name=="PhaseChainController");if(!control)return new List<int>();var ledger=Ref(control,"Ledger");var row=new List<int>{Read(control,"Frame"),Read(ledger,"Code"),Read(ledger,"Calls")};foreach(var name in new[]{"Primary","LateAdded"}){var c=Ref(control,name);row.Add(c?1:0);row.Add(c?(((Behaviour)c).enabled?1:0):-1);row.Add(c?(c.gameObject.activeSelf?1:0):-1);foreach(var n in new[]{"Starts","Updates","Lates","Enables","Disables","ReturnedStart","ReturnedEnable"})row.Add(c?Read(c,n):-1);foreach(var slot in new[]{"StartLeaf","EnableLeaf"}){var leaf=Ref(c,slot);row.Add(leaf?1:0);foreach(var n in new[]{"Starts","Updates","Lates","Enables","Disables"})row.Add(leaf?Read(leaf,n):-1);}}return row;}
+}

@@ -1,0 +1,14 @@
+using UnityEngine;
+using UnityEngine.UI;
+public class AuditUiName:MonoBehaviour {
+ public bool Existing;
+ public GameObject Owner;
+ public Canvas Panel;
+ public Button Action;
+ public GameObject Copy;
+ public AuditUiName Copied;
+ public void InitUI(){if(Existing){Panel=Owner.GetComponent<Canvas>();Action=Owner.GetComponent<Button>();}else{Panel=Owner.AddComponent<Canvas>();Action=Owner.AddComponent<Button>();}}
+ public void RenameCanvas(){Panel.name="캔버스 UI";}
+ public void RenameButton(){Action.name="버튼 UI";}
+ public void CloneOwner(){Copy=Instantiate(Owner);Copied=Copy.GetComponent<AuditUiName>();Copied.Panel.name="복제 UI";}
+}

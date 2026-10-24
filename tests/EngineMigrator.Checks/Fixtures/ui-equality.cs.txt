@@ -1,0 +1,25 @@
+using UnityEngine;
+using UnityEngine.UI;
+public class AuditUIEquality:MonoBehaviour {
+ public Canvas Left;public Canvas Right;public Button LeftButton;public Button RightButton;
+ public GameObject LeftOwner;public GameObject RightOwner;
+ public bool Equal(){return Left==Right;}
+ public bool Unequal(){return Left!=Right;}
+ public bool LeftMissing(){return Left==null;}
+ public bool RightMissing(){return Right==null;}
+ public bool LeftAlive(){return Left;}
+ public bool RightAlive(){return Right;}
+ public bool ButtonEqual(){return LeftButton==RightButton;}
+ public bool LeftButtonAlive(){return LeftButton;}
+ public bool RightButtonAlive(){return RightButton;}
+ public bool MixedLeft(){return Left==LeftButton;}
+ public bool MixedRight(){return Right==RightButton;}
+ public bool LeftOwnerAlive(){return LeftOwner;}
+ public bool RightOwnerAlive(){return RightOwner;}
+ public Canvas Echo(Canvas value){return value;}
+ public bool Compare(Canvas a,Canvas b){return a==b;}
+ public bool Reassign(Canvas a,Canvas b){a=b;return a==b;}
+ public bool ViaReturn(){Canvas value=Echo(Left);return value==Right;}
+ public bool ViaArguments(){return Compare(Left,Right);}
+ public bool CallerPreserved(){Canvas a=Left;Reassign(a,Right);return a==Left;}
+}

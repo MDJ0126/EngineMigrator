@@ -1,0 +1,6 @@
+#include "GameFramework/WorldSettings.h"
+namespace EMInitialTimingProbe {
+static TArray<TSharedPtr<FJsonValue>> Rows;
+static void Observe(UWorld* World,ELevelTick,float Delta){FString Output;if(World->WorldType!=EWorldType::Game||GFrameCounter==0||!FParse::Value(FCommandLine::Get(),TEXT("EMInitialTimingProbe="),Output))return;TArray<AActor*> All;UGameplayStatics::GetAllActorsOfClass(World,AActor::StaticClass(),All);for(AActor* A:All)checkf(A->GetClass()->GetOutermost()->GetName()!=TEXT("/Script/EMActorPort"),TEXT("Unexpected user behaviour in empty timing fixture"));TArray<TSharedPtr<FJsonValue>> Row;Row.Add(MakeShared<FJsonValueNumber>(Rows.Num()+1));Row.Add(MakeShared<FJsonValueNumber>(Delta));Row.Add(MakeShared<FJsonValueNumber>(World->GetWorldSettings()->GetEffectiveTimeDilation()));Rows.Add(MakeShared<FJsonValueArray>(Row));if(Rows.Num()==5){auto Result=MakeShared<FJsonObject>();Result->SetStringField(TEXT("status"),TEXT("CAPTURED"));Result->SetNumberField(TEXT("userBehaviours"),0);Result->SetArrayField(TEXT("rows"),Rows);FString Text;auto Writer=TJsonWriterFactory<>::Create(&Text);FJsonSerializer::Serialize(Result,Writer);FFileHelper::SaveStringToFile(Text,*Output);FPlatformMisc::RequestExit(false);}}
+struct FInstall{FInstall(){FWorldDelegates::OnWorldTickEnd.AddStatic(&Observe);}};static FInstall Install;
+}

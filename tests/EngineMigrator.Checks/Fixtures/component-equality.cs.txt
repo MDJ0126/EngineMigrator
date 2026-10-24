@@ -1,0 +1,22 @@
+using UnityEngine;
+public class AuditComponentEquality:MonoBehaviour {
+ public AuditComponentEquality Left;public AuditComponentEquality Right;
+ public GameObject LeftOwner;public GameObject RightOwner;
+ public bool Equal(){return Left==Right;}
+ public bool Unequal(){return Left!=Right;}
+ public bool LeftMissing(){return Left==null;}
+ public bool RightMissing(){return Right==null;}
+ public bool LeftAlive(){return Left;}
+ public bool RightAlive(){return Right;}
+ public bool ViaLocals(){AuditComponentEquality a=Left;AuditComponentEquality b=Right;return a==b;}
+ public bool Negated(){return !(Left==Right);}
+ public bool LeftOwnerAlive(){return LeftOwner;}
+ public bool RightOwnerAlive(){return RightOwner;}
+ public AuditComponentEquality Echo(AuditComponentEquality value){return value;}
+ public bool Compare(AuditComponentEquality a,AuditComponentEquality b){return a==b;}
+ public bool Reassign(AuditComponentEquality a,AuditComponentEquality b){a=b;return a==b;}
+ public bool ViaReturn(){AuditComponentEquality value=Echo(Left);return value==Right;}
+ public bool ViaArguments(){return Compare(Left,Right);}
+ public bool ViaReassignment(){return Reassign(Left,Right);}
+ public bool CallerPreserved(){AuditComponentEquality a=Left;Reassign(a,Right);return a==Left;}
+}

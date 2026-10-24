@@ -1,0 +1,38 @@
+using UnityEngine;
+public class FLoopLedger:MonoBehaviour {
+ public int Code;public int Calls;
+ public void Record(int id){int eventId=id;int op=id%100;if(id>=100&&(op==2||op==3||op==6)){if(id<1000)eventId=100+op;else if(id<10000)eventId=1000+op;else eventId=10000+op;}Code=(Code*31+eventId)%1000003;Calls++;}
+}
+public class FLoopGrand:MonoBehaviour {
+ public FLoopLedger Ledger;public int Id;public int Starts;public int Fixeds;public int Updates;public int Enables;public int Disables;
+ protected virtual void OnEnable(){Enables++;if(Ledger!=null)Ledger.Record(Id*100+4);}
+ protected virtual void OnDisable(){Disables++;if(Ledger!=null)Ledger.Record(Id*100+5);}
+ protected virtual void Start(){Starts++;Ledger.Record(Id*100+1);}
+ protected virtual void FixedUpdate(){Fixeds++;Ledger.Record(Id*100+3);}
+ protected virtual void Update(){Updates++;Ledger.Record(Id*100+2);}
+}
+public class FLoopChild:MonoBehaviour {
+ public FLoopLedger Ledger;public int Id;public int Starts;public int Fixeds;public int Updates;public int Enables;public int Disables;public int ReturnedGrandStart;public GameObject GrandOwner;public FLoopGrand Grand;
+ protected virtual void OnEnable(){Enables++;if(Ledger!=null)Ledger.Record(Id*100+4);}
+ protected virtual void OnDisable(){Disables++;if(Ledger!=null)Ledger.Record(Id*100+5);}
+ protected virtual void Start(){Starts++;Ledger.Record(Id*100+1);GrandOwner=new GameObject("Fixed grandchild");Grand=GrandOwner.AddComponent<FLoopGrand>();Grand.Ledger=Ledger;Grand.Id=Id*10+1;ReturnedGrandStart=Grand.Starts;}
+ protected virtual void FixedUpdate(){Fixeds++;Ledger.Record(Id*100+3);}
+ protected virtual void Update(){Updates++;Ledger.Record(Id*100+2);}
+}
+public class FLoopWorker:MonoBehaviour {
+ public FLoopLedger Ledger;public int Id;public int Starts;public int Fixeds;public int Updates;public int Enables;public int Disables;public int ReturnedChildStart;public GameObject ChildOwner;public FLoopChild Child;
+ protected virtual void OnEnable(){Enables++;if(Ledger!=null)Ledger.Record(Id*100+4);}
+ protected virtual void OnDisable(){Disables++;if(Ledger!=null)Ledger.Record(Id*100+5);}
+ protected virtual void Start(){Starts++;Ledger.Record(Id*100+1);ChildOwner=new GameObject("Fixed child");Child=ChildOwner.AddComponent<FLoopChild>();Child.Ledger=Ledger;Child.Id=Id*10+1;ReturnedChildStart=Child.Starts;}
+ protected virtual void FixedUpdate(){Fixeds++;Ledger.Record(Id*100+3);}
+ protected virtual void Update(){Updates++;Ledger.Record(Id*100+2);}
+}
+public class FLoopDerived:FLoopWorker {
+ public int DerivedFixed;
+ protected override void FixedUpdate(){base.FixedUpdate();DerivedFixed++;Ledger.Record(Id*100+6);}
+}
+public class FLoopDriver:MonoBehaviour {
+ public FLoopLedger Ledger;public int Frame;public int Steps;public GameObject MainOwner;public GameObject CloneOwner;public FLoopDerived Main;public FLoopDerived Clone;public FLoopChild SavedMainChild;public FLoopChild SavedCloneChild;public int ReturnedMainStart;public int ReturnedMainFixed;public int ReturnedCloneStart;public int ReturnedCloneFixed;public bool CloneSameChild;
+ protected virtual void FixedUpdate(){Steps++;Ledger.Record(1);if(Steps==1){MainOwner=new GameObject("Fixed main");Main=MainOwner.AddComponent<FLoopDerived>();Main.Ledger=Ledger;Main.Id=1;ReturnedMainStart=Main.Starts;ReturnedMainFixed=Main.Fixeds;}if(Steps==2){CloneOwner=Instantiate(MainOwner);Clone=CloneOwner.GetComponent<FLoopDerived>();Clone.Id=2;ReturnedCloneStart=Clone.Starts;ReturnedCloneFixed=Clone.Fixeds;CloneSameChild=Main.Child==Clone.Child;}if(Steps==3)Main.enabled=false;if(Steps==4)Main.enabled=true;if(Steps==5){SavedMainChild=Main.Child;Destroy(MainOwner);}if(Steps==7)CloneOwner.SetActive(false);if(Steps==8)CloneOwner.SetActive(true);if(Steps==10){SavedCloneChild=Clone.Child;Destroy(CloneOwner);}}
+ protected virtual void Update(){Frame++;Ledger.Record(2);}
+}

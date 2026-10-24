@@ -1,0 +1,7 @@
+Engine icons are original files copied from installed engines, without recoloring or reshaping.
+Unity: Unity 6000.0.83f1/Editor/Data/Resources/UnityPlayerIcon.png
+Unreal Engine: UE_5.8/Engine/Content/Slate/Starship/Common/UELogo.png
+Unity branding: https://unity.com/legal/branding-trademarks
+Unreal Engine branding: https://www.unrealengine.com/en-US/branding
+Unity and Unreal Engine marks belong to their respective owners.
+EngineMigrator is an independent tool, not sponsored by or affiliated with Unity Technologies or Epic Games.

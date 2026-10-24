@@ -1,0 +1,7 @@
+param([string]$Project='artifacts/runtime-world-tests/UnrealTemplate')
+$ErrorActionPreference='Stop';$root=[IO.Path]::GetFullPath($Project);if(!$root.StartsWith(([IO.Path]::GetFullPath('artifacts')+'\'),[StringComparison]::OrdinalIgnoreCase)){throw 'Private template only'};New-Item ($root+'/Source/EMPortHost') -ItemType Directory -Force|Out-Null
+'{"FileVersion":3,"EngineAssociation":"5.8","Modules":[{"Name":"EMPortHost","Type":"Runtime","LoadingPhase":"Default"}]}'|Set-Content ($root+'/RuntimeWorld.uproject')
+'using UnrealBuildTool;public class EMPortHost:ModuleRules{public EMPortHost(ReadOnlyTargetRules Target):base(Target){PCHUsage=PCHUsageMode.UseExplicitOrSharedPCHs;PublicDependencyModuleNames.AddRange(new[]{"Core","CoreUObject","Engine","Json","UMG"});}}'|Set-Content ($root+'/Source/EMPortHost/EMPortHost.Build.cs')
+Copy-Item ($PSScriptRoot+'/runtime-probe/RuntimeWorldProbe.cpp') ($root+'/Source/EMPortHost/EMPortHost.cpp') -Force
+foreach($suffix in @('','Editor')){$type=if($suffix){'Editor'}else{'Game'};"using UnrealBuildTool;public class RuntimeWorld${suffix}Target:TargetRules{public RuntimeWorld${suffix}Target(TargetInfo Target):base(Target){Type=TargetType.$type;DefaultBuildSettings=BuildSettingsVersion.Latest;IncludeOrderVersion=EngineIncludeOrderVersion.Latest;ExtraModuleNames.Add(`"EMPortHost`");}}"|Set-Content ($root+"/Source/RuntimeWorld${suffix}.Target.cs")}
+Write-Output 'RUNTIME_NATIVE_TEMPLATE_READY'

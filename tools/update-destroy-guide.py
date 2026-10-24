@@ -1,0 +1,6 @@
+from pathlib import Path
+p=Path(__file__).resolve().parents[1]/'docs/guide.html';s=p.read_text(encoding='utf-8')
+marker='<h3>초기 실행 순서와 활성 콜백 재진입</h3>'
+addition='''<h3>GameObject 전체 삭제와 초기 프리팹 복제</h3><p><code>Destroy(GameObject)</code>는 컴포넌트 단독 삭제와 구분합니다. 검사한 활성 객체는 삭제 요청 안에서 컴포넌트 enabled가 false가 되고 OnDisable을 호출하지만, 호출 반환 직후 GameObject의 activeSelf·activeInHierarchy와 참조는 아직 유지됩니다. 최종 제거 단계에서는 삭제 루트의 자체 활성 값을 내리고 자식의 자체 값은 보존하며, 계층 활성 상태를 갱신한 뒤 OnDestroy를 한 번 호출합니다.</p><p>활성 객체의 disabled 컴포넌트는 Awake 이후 OnDestroy만 받는 경우를 검증했습니다. 한 번도 활성화되지 않은 객체는 Awake·OnEnable·Start·OnDisable·OnDestroy가 실행되지 않았습니다. Awake 내부 전체 삭제는 OnEnable·Start·Update를 실행하지 않는 흐름을 대조했습니다.</p><p>Update에서 생성한 컴포넌트의 늦은 Start 안에서 전체 삭제를 요청하고 OnDisable에서 다시 enabled·GameObject를 활성화하는 경우도 대조했습니다. 검사한 Unity 흐름은 첫 관찰 시점에 재활성화된 참조를 유지하고, 다음 Update 전 제거 과정에서 다시 OnDisable·OnDestroy를 호출합니다. 일반 삭제의 현재 Tick 이후 처리와 이 늦은 Start 경로를 분리했습니다. 이는 검사한 프레임 관찰 지점의 동등성이며 모든 렌더 단계·콜백 조합의 동등성을 뜻하지 않습니다.</p><p>활성 스크립트 프리팹을 초기 Awake·Start에서 Instantiate하고 내부 컴포넌트 참조, 호출 반환 때의 Awake·OnEnable 및 Start 보류, 첫 Update와 이후 전체 삭제를 검증했습니다. 삭제 대기·시작 배치·재진입의 임시 태그는 복제본에서 정리합니다. 비활성 프리팹과 삭제·재진입 도중 복제의 모든 조합, 자산 자체 삭제·재부모화·부활 동작은 아직 미검증입니다.</p>'''
+if addition not in s:s=s.replace(marker,addition+marker)
+p.write_text(s,encoding='utf-8');print('RUNTIME_DESTROY_GUIDE_UPDATED')

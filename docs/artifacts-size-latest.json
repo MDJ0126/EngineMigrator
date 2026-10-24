@@ -1,0 +1,101 @@
+{
+  "path": "C:\\Projects\\EngineMigrator\\artifacts",
+  "bytes": 39995411528,
+  "GB": 39.995412,
+  "GiB": 37.24863,
+  "files": 114457,
+  "top": [
+    [
+      "\ubc30\ud3ec \uac80\uc99d",
+      5.1081
+    ],
+    [
+      "packaging-tests",
+      2.2999
+    ],
+    [
+      ".",
+      1.6071
+    ],
+    [
+      ".retained-unity-packages",
+      1.1448
+    ],
+    [
+      "runtime-ui-prefab-packaging-v6",
+      0.8895
+    ],
+    [
+      "runtime-ui-prefab-packaging-v4",
+      0.888
+    ],
+    [
+      "runtime-physics-prefab-packaging-v4",
+      0.8874
+    ],
+    [
+      "runtime-animation-prefab-packaging-v6",
+      0.8864
+    ],
+    [
+      "runtime-animation-prefab-packaging-v5",
+      0.8863
+    ],
+    [
+      "runtime-destroy-packaging-v3",
+      0.8856
+    ],
+    [
+      "runtime-ui-api-packaging-v2",
+      0.8852
+    ],
+    [
+      "runtime-order-packaging-v3",
+      0.8844
+    ],
+    [
+      "runtime-dependency-packaging-v1",
+      0.8836
+    ],
+    [
+      "runtime-active-packaging-v4",
+      0.8835
+    ],
+    [
+      "runtime-dormant-packaging-v1",
+      0.8826
+    ],
+    [
+      "runtime-phase-packaging-v3",
+      0.8818
+    ],
+    [
+      "runtime-placement-packaging",
+      0.8816
+    ],
+    [
+      "runtime-component-packaging-v7",
+      0.8811
+    ],
+    [
+      "runtime-enable-packaging",
+      0.8805
+    ],
+    [
+      "runtime-component-packaging",
+      0.8801
+    ]
+  ],
+  "categories_GiB": {
+    "other": 16.9546,
+    "binaries": 8.5858,
+    "library": 0.3381,
+    "saved": 0.0245,
+    "archive": 9.6681,
+    "offlinestage": 0.5327,
+    "packagecache": 1.1448
+  },
+  "errors": [],
+  "links": [],
+  "finished": "2026-10-23T22:11:04+0900"
+}

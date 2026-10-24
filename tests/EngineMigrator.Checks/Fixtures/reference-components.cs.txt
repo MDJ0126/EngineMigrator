@@ -1,0 +1,25 @@
+using UnityEngine;using UnityEngine.UI;
+public class AuditUiConditional:MonoBehaviour{
+ public Canvas CanvasLeft;public Canvas CanvasRight;public Button ButtonLeft;public Button ButtonRight;public int Calls;
+ public Canvas NextCanvas(Canvas value){Calls++;return value;}
+ public Button NextButton(Button value){Calls++;return value;}
+ public Canvas PickCanvas(bool choose){return choose?CanvasLeft:CanvasRight;}
+ public Button PickButton(bool choose){return choose?ButtonLeft:ButtonRight;}
+ public Canvas OptionalCanvas(bool choose){return choose?CanvasLeft:null;}
+ public Button OptionalButton(bool choose){return choose?null:ButtonRight;}
+ public Canvas LazyCanvas(bool choose){return choose?NextCanvas(CanvasLeft):NextCanvas(CanvasRight);}
+ public Button LazyButton(bool choose){return choose?NextButton(ButtonLeft):NextButton(ButtonRight);}
+ public void SetCanvas(bool choose,bool value){Canvas selected=choose?CanvasLeft:CanvasRight;selected.enabled=value;}
+ public void SetButton(bool choose,bool value){Button selected=choose?ButtonLeft:ButtonRight;selected.interactable=value;}
+ public bool ReadCanvas(bool choose){Canvas selected=choose?CanvasLeft:CanvasRight;return selected.enabled;}
+ public bool ReadButton(bool choose){Button selected=choose?ButtonLeft:ButtonRight;return selected.interactable;}
+}
+public class AuditReferenceBase:MonoBehaviour{}
+public class AuditReferenceChild:AuditReferenceBase{}
+public class AuditInheritedConditional:MonoBehaviour{
+ public int Calls;
+ public AuditReferenceBase Next(AuditReferenceBase value){Calls++;return value;}
+ public AuditReferenceBase Pick(bool choose,AuditReferenceBase left,AuditReferenceChild right){return choose?left:right;}
+ public AuditReferenceBase Optional(bool choose,AuditReferenceBase left){return choose?left:null;}
+ public AuditReferenceBase Lazy(bool choose,AuditReferenceBase left,AuditReferenceChild right){return choose?Next(left):Next(right);}
+}

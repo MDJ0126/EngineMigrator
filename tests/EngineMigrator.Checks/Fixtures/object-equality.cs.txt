@@ -1,0 +1,24 @@
+using UnityEngine;
+public class AuditObjectEquality:MonoBehaviour {
+ public GameObject Left; public GameObject Right;
+ public AuditObjectEquality Peer;
+ public bool Equal(){return Left==Right;}
+ public bool Unequal(){return Left!=Right;}
+ public bool LeftMissing(){return Left==null;}
+ public bool RightMissing(){return Right==null;}
+ public bool LeftAlive(){return Left;}
+ public bool RightAlive(){return Right;}
+ public bool ViaLocals(){GameObject a=Left;GameObject b=Right;return a==b;}
+ public bool Negated(){return !(Left==Right);}
+ public bool CompareArguments(GameObject a,GameObject b){return a==b;}
+ public bool ViaArguments(){return CompareArguments(Left,Right);}
+ public GameObject ReadLeft(){return Left;}
+ public GameObject ReadRight(){return Right;}
+ public bool ViaReturns(){GameObject a=ReadLeft();GameObject b=ReadRight();return a==b;}
+ public bool ViaConditional(bool choose){GameObject a=choose?Left:Right;return a==Right;}
+ public bool ResetThenCompare(){Left=null;return Left==Right;}
+ public bool ViaReflectedArguments(){return Peer.CompareArguments(Left,Right);}
+ public bool ViaReflectedReturns(){GameObject a=Peer.ReadLeft();GameObject b=Peer.ReadRight();return a==b;}
+ public void MutateArgument(GameObject value){value=null;}
+ public bool ViaParameterCopy(){GameObject before=Left;Peer.MutateArgument(Left);return Left==before;}
+}

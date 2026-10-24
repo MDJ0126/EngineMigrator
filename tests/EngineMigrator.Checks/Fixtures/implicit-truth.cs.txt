@@ -1,0 +1,19 @@
+using UnityEngine;using UnityEngine.UI;
+public class AuditImplicitTruth:MonoBehaviour {
+ public GameObject Target;public GameObject Right;public Transform Pose;public Canvas CanvasTarget;public Button ButtonTarget;public AuditImplicitTruth Peer;public int Calls;
+ public bool Truth(){return Target;}
+ public bool Not(){return !Target;}
+ public int Branch(){if((Target))return 1;return 0;}
+ public bool Local(){bool alive=Target;return alive;}
+ public bool Accept(bool value){return value;}
+ public bool Arg(){return Accept(Target);}
+ public bool Explicit(){return (bool)Target;}
+ public bool EqualTrue(){return Target==true;}
+ public bool PeerNotFalse(){return Peer!=false;}
+ public int Loops(){int count=0;while(Target&&count<2){count++;}return count;}
+ public int ReadFields(){int mask=0;if(Target)mask|=1;if(Pose)mask|=2;if(CanvasTarget)mask|=4;if(ButtonTarget)mask|=8;if(Peer)mask|=16;return mask;}
+ public GameObject Next(){Calls++;return Right;}
+ public bool Lazy(){return Target&&Next();}
+ public bool LazyOr(){return Target||Next();}
+ public bool Choose(bool choose){return choose?Target:Right;}
+}

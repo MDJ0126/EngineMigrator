@@ -1,0 +1,18 @@
+using UnityEngine;
+public class AuditBitwiseActor:MonoBehaviour {
+ public int Field;
+ public int And(int a,int b){return a&b;}
+ public int Or(int a,int b){return a|b;}
+ public int Xor(int a,int b){return a^b;}
+ public int Not(int a){return ~a;}
+ public int Left(int a,int count){return a<<count;}
+ public int Right(int a,int count){return a>>count;}
+ public int Local(int value,int count){int result=value;result&=-1;result|=32;result^=17;result<<=count;result>>=count;return result;}
+ public int FieldUpdate(int value,int count){Field=value;Field&=-1;Field|=32;Field^=17;Field<<=count;Field>>=count;return Field;}
+ public int Loop(){int count=0;for(int bit=1;bit>0;bit<<=1){count++;}return count;}
+}
+public class AuditBitTarget:MonoBehaviour{public int Value;}
+public class AuditBitDriver:MonoBehaviour {
+ public AuditBitTarget Target;
+ public int Run(int value,int count){Target.Value=value;Target.Value&=-1;Target.Value|=32;Target.Value^=17;Target.Value<<=count;Target.Value>>=count;return Target.Value;}
+}

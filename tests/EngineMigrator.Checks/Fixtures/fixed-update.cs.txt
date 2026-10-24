@@ -1,0 +1,40 @@
+using UnityEngine;
+public class FixedLedger:MonoBehaviour {
+ public int Code;
+ public int Calls;
+ public int AddedFixed;
+ public void Record(int id){Code=(Code*31+id)%1000003;Calls++;}
+}
+public class FixedBase:MonoBehaviour {
+ public FixedLedger Ledger;
+ public bool IsAdded;
+ public int AwakeCount;
+ public int EnableCount;
+ public int DisableCount;
+ public int StartCount;
+ public int FixedCount;
+ public int Updates;
+ public float FixedElapsed;
+ public float LastDelta;
+ public float StepSeen;
+ public bool StartedBeforeFixed=true;
+ protected virtual void Awake(){AwakeCount++;}
+ protected virtual void OnEnable(){EnableCount++;}
+ protected virtual void OnDisable(){DisableCount++;}
+ protected virtual void Start(){StartCount++;StepSeen=Time.fixedDeltaTime;}
+ protected virtual void FixedUpdate(){FixedCount++;FixedElapsed+=Time.deltaTime;LastDelta=Time.deltaTime;StepSeen=Time.fixedDeltaTime;StartedBeforeFixed=StartedBeforeFixed&&StartCount==1;Ledger.Record(1);if(IsAdded)Ledger.AddedFixed++;}
+ protected virtual void Update(){Updates++;Ledger.Record(3);}
+}
+public class FixedWorker:FixedBase {
+ public int DerivedFixed;
+ protected override void FixedUpdate(){base.FixedUpdate();DerivedFixed++;Ledger.Record(2);}
+}
+public class FixedController:MonoBehaviour {
+ public int Frame;
+ public FixedLedger Ledger;
+ public FixedWorker Worker;
+ public GameObject Owner;
+ public GameObject AddedOwner;
+ public FixedWorker Added;
+ protected virtual void Update(){Frame++;if(Frame==4)Worker.enabled=false;if(Frame==7)Worker.enabled=true;if(Frame==10)Owner.SetActive(false);if(Frame==13)Owner.SetActive(true);if(Frame==16){AddedOwner=new GameObject("Added fixed worker");Added=AddedOwner.AddComponent<FixedWorker>();Added.Ledger=Ledger;Added.IsAdded=true;}if(Frame==20)Destroy(AddedOwner);}
+}

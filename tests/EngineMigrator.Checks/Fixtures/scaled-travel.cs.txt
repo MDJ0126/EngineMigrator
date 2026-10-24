@@ -1,0 +1,77 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class ScaledTravel:MonoBehaviour {
+ public int Stage;
+ public int Frame;
+ public int Starts;
+ public int Awakes;
+ public int Fixeds;
+ public int DestroyEvents;
+ public float AwakeScale;
+ public float StartScale;
+ public float Scale;
+ public float UpdateDelta;
+ public float FixedElapsed;
+ public bool CloneDistinct;
+ public GameObject Owner;
+ public GameObject CloneOwner;
+ public GameObject PausedOwner;
+ public ScaledWorker Worker;
+ public ScaledWorker Clone;
+ public ScaledWorker Paused;
+ protected virtual void Awake(){Awakes++;AwakeScale=Time.timeScale;}
+ protected virtual void Start(){Starts++;StartScale=Time.timeScale;}
+ protected virtual void FixedUpdate(){Fixeds++;FixedElapsed+=Time.deltaTime;}
+ protected virtual void Update(){
+  Frame++;UpdateDelta=Time.deltaTime;
+  if(Stage==0){
+   if(Frame==2)Time.timeScale=.5f;
+   if(Frame==3){Owner=new GameObject("Scaled owner");Worker=Owner.AddComponent<ScaledWorker>();Worker.Controller=this;Worker.Version=11;}
+   if(Frame==4){CloneOwner=Instantiate(Owner);Clone=CloneOwner.GetComponent<ScaledWorker>();CloneDistinct=Clone!=Worker;}
+   if(Frame==5)Time.timeScale=0f;
+   if(Frame==6)Destroy(CloneOwner);
+   if(Frame==7){PausedOwner=new GameObject("Paused owner");Paused=PausedOwner.AddComponent<ScaledWorker>();Paused.Controller=this;Paused.Version=23;}
+   if(Frame==8)Destroy(Owner);
+   if(Frame==10)Time.timeScale=2f;
+   if(Frame==12)SceneManager.LoadScene("ScaledMiddle");
+  }
+  if(Stage==1){
+   if(Frame==2){Owner=new GameObject("Middle owner");Worker=Owner.AddComponent<ScaledWorker>();Worker.Controller=this;Worker.Version=31;}
+   if(Frame==3)Time.timeScale=0f;
+   if(Frame==4){CloneOwner=Instantiate(Owner);Clone=CloneOwner.GetComponent<ScaledWorker>();CloneDistinct=Clone!=Worker;}
+   if(Frame==5)Destroy(Owner);
+   if(Frame==6)Time.timeScale=.5f;
+   if(Frame==8)SceneManager.LoadScene("ScaledFinal");
+  }
+  if(Stage==2){
+   if(Frame==2)Time.timeScale=0f;
+   if(Frame==3){Owner=new GameObject("Final owner");Worker=Owner.AddComponent<ScaledWorker>();Worker.Controller=this;Worker.Version=41;}
+   if(Frame==4){CloneOwner=Instantiate(Owner);Clone=CloneOwner.GetComponent<ScaledWorker>();CloneDistinct=Clone!=Worker;}
+   if(Frame==5)Destroy(CloneOwner);
+   if(Frame==6)Time.timeScale=1f;
+   if(Frame==8)Destroy(Owner);
+  }
+  Scale=Time.timeScale;
+ }
+}
+public class ScaledWorker:MonoBehaviour {
+ public ScaledTravel Controller;
+ public int Awakes;
+ public int Enables;
+ public int Starts;
+ public int Updates;
+ public int Fixeds;
+ public int Version;
+ public float AwakeScale;
+ public float StartScale;
+ public float Scale;
+ public float Delta;
+ public float Elapsed;
+ public bool StartBeforeFixed=true;
+ protected virtual void Awake(){Awakes++;AwakeScale=Time.timeScale;}
+ protected virtual void OnEnable(){Enables++;}
+ protected virtual void Start(){Starts++;StartScale=Time.timeScale;}
+ protected virtual void FixedUpdate(){Fixeds++;Elapsed+=Time.deltaTime;StartBeforeFixed=StartBeforeFixed&&Starts==1;}
+ protected virtual void Update(){Updates++;Scale=Time.timeScale;Delta=Time.deltaTime;}
+ protected virtual void OnDestroy(){if(Controller!=null)Controller.DestroyEvents++;}
+}

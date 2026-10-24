@@ -1,0 +1,8 @@
+param([string]$Run='artifacts/runtime-animation-prefab-forward-v6/PROJECT-40ae2348bc19',[string]$Output='artifacts/runtime-animation-prefab-tests/prototype-guard-verification.json')
+. (Join-Path $PSScriptRoot 'Assert-EngineExecutionAllowed.ps1')
+
+$ErrorActionPreference='Stop';$Run=[IO.Path]::GetFullPath($Run);$Output=[IO.Path]::GetFullPath($Output);$allowed=[IO.Path]::GetFullPath('artifacts')+'\';foreach($p in @($Run,$Output)){if(!$p.StartsWith($allowed,[StringComparison]::OrdinalIgnoreCase)){throw 'Private fixture only'}}
+$manifest=Get-Content ($Run+'/Target/.EngineMigratorProject.json') -Raw|ConvertFrom-Json;$map=@($manifest.units|Where-Object {$_.kind-eq'scene'-and$_.name-eq'AnimationPrefab'});if($map.Count-ne 1){throw 'Expected a unique animation scene'}
+@{map=$map[0].map;adapters=[IO.Path]::GetFullPath($PSScriptRoot+'/../adapters/unreal');output=$Output}|ConvertTo-Json|Set-Content ($Run+'/Target/EMAnimationGuardJob.json')
+$s=[Diagnostics.ProcessStartInfo]::new('C:/Program Files/Epic Games/UE_5.8/Engine/Binaries/Win64/UnrealEditor-Cmd.exe');$s.UseShellExecute=$false;$s.CreateNoWindow=$true;foreach($a in @(($Run+'/Target/RuntimeWorld.uproject'),'-run=pythonscript',('-script='+$PSScriptRoot+'/verify-runtime-animation-prototype-guard.py'),'-nullrhi','-unattended','-nop4',('-abslog='+$Output+'.log'))){$s.ArgumentList.Add($a)};$p=[Diagnostics.Process]::Start($s);if(!$p.WaitForExit(180000)){$p.Kill();throw 'Own animation guard test timed out'};if($p.ExitCode-ne 0-or!(Test-Path $Output)){throw 'Animation guard test failed'};Write-Output 'RUNTIME_ANIMATION_PROTOTYPE_GUARD_PASS'
+

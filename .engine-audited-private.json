@@ -1,0 +1,9 @@
+{
+  "editors": [
+    "C:\\Program Files\\Unity\\Hub\\Editor\\6000.0.83f1\\Editor\\Unity.exe",
+    "C:\\Program Files\\Epic Games\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor-Cmd.exe"
+  ],
+  "schema": 1,
+  "artifactsRoot": "C:\\Projects\\EngineMigrator\\artifacts",
+  "allowBuilds": true
+}

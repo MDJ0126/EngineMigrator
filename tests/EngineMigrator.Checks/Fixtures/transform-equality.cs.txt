@@ -1,0 +1,24 @@
+using UnityEngine;
+public class AuditTransformEquality:MonoBehaviour {
+ public Transform Left;public Transform Right;
+ public GameObject LeftOwner;public GameObject RightOwner;
+ public bool Equal(){return Left==Right;}
+ public bool Unequal(){return Left!=Right;}
+ public bool LeftMissing(){return Left==null;}
+ public bool RightMissing(){return Right==null;}
+ public bool LeftAlive(){return Left;}
+ public bool RightAlive(){return Right;}
+ public bool ViaLocals(){Transform a=Left;Transform b=Right;return a==b;}
+ public bool Negated(){return !(Left==Right);}
+ public bool LeftOwnerAlive(){return LeftOwner;}
+ public bool RightOwnerAlive(){return RightOwner;}
+ public Transform Echo(Transform value){return value;}
+ public bool Compare(Transform a,Transform b){return a==b;}
+ public bool Reassign(Transform a,Transform b){a=b;return a==b;}
+ public bool ViaReturn(){Transform value=Echo(Left);return value==Right;}
+ public bool ViaArguments(){return Compare(Left,Right);}
+ public bool ViaReassignment(){return Reassign(Left,Right);}
+ public bool CallerPreserved(){Transform a=Left;Reassign(a,Right);return a==Left;}
+ public bool MoveLeft(){if(!Left)return false;Left.localPosition=new Vector3(1,2,3);return Left.localPosition.x==1.0f;}
+ public bool ParentRoundtrip(){if(!Left||!Right)return true;if(Left==Right)return true;Left.SetParent(Right);Left.parent=null;return Left.parent==null;}
+}

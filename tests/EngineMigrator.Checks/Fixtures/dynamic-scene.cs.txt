@@ -1,0 +1,9 @@
+using UnityEngine;using UnityEngine.SceneManagement;
+public class DynamicSceneActor:MonoBehaviour {
+ public int Index=1;public int Calls;
+ public int Next(){Calls++;return Index;}
+ public void Direct(){SceneManager.LoadScene(Index);}
+ public void Called(){SceneManager.LoadScene(Next());}
+ public void Computed(){SceneManager.LoadScene(Index+1);}
+ public void Constant(){const int Level=1;SceneManager.LoadScene(Level);}
+}

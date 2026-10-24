@@ -1,0 +1,14 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class TravelFixed:MonoBehaviour {
+ public int Stage;
+ public int Frame;
+ public int Starts;
+ public int Fixeds;
+ public int InitialFixed;
+ public float Elapsed;
+ public bool StartedBeforeFixed=true;
+ protected virtual void Start(){Starts++;}
+ protected virtual void FixedUpdate(){Fixeds++;Elapsed+=Time.deltaTime;StartedBeforeFixed=StartedBeforeFixed&&Starts==1;}
+ protected virtual void Update(){Frame++;if(Frame==1)InitialFixed=Fixeds;if(Stage==0&&Frame==7)SceneManager.LoadScene("FixedMiddle");if(Stage==1&&Frame==7)SceneManager.LoadScene("FixedFinal");}
+}
