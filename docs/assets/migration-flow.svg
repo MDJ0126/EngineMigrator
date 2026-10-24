@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="360" viewBox="0 0 1080 360" role="img" aria-labelledby="title desc">
+  <title id="title">EngineMigrator 변환 흐름</title>
+  <desc id="desc">Unity와 Unreal 사이에서 지원 장면, 리소스, 스크립트를 독립 복사본으로 변환하고 결과 보고서를 확인합니다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#e76f51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1080" height="360" rx="24" fill="#fffaf7"/>
+  <g font-family="Segoe UI, Malgun Gothic, Apple SD Gothic Neo, sans-serif" text-anchor="middle">
+    <text x="540" y="43" fill="#9a5845" font-size="13" font-weight="700" letter-spacing="3">PROJECT MIGRATION</text>
+    <g fill="#ffffff" stroke="#ebddd7" stroke-width="1.5">
+      <rect x="40" y="95" width="240" height="162" rx="18"/>
+      <rect x="800" y="95" width="240" height="162" rx="18"/>
+    </g>
+    <rect x="370" y="77" width="340" height="198" rx="20" fill="#fce8e0" stroke="#e76f51" stroke-width="1.5"/>
+    <g fill="none" stroke="#e76f51" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)">
+      <path d="M 298 176 H 350"/>
+      <path d="M 730 176 H 782"/>
+    </g>
+    <text x="160" y="156" fill="#302b29" font-size="30" font-weight="700">Unity</text>
+    <text x="160" y="192" fill="#796b65" font-size="15">장면 · 에셋 · C#</text>
+    <text x="920" y="156" fill="#302b29" font-size="30" font-weight="700">Unreal</text>
+    <text x="920" y="192" fill="#796b65" font-size="15">맵 · 에셋 · Actor</text>
+    <text x="540" y="130" fill="#ac4a32" font-size="25" font-weight="700">EngineMigrator</text>
+    <text x="540" y="170" fill="#624b42" font-size="16">사전 검사 → 지원 항목 변환</text>
+    <path d="M 410 192 H 670" stroke="#ebc9bc"/>
+    <text x="540" y="224" fill="#624b42" font-size="16">객체·참조 대응표와 결과 보고서</text>
+    <text x="540" y="311" fill="#796b65" font-size="14">원본 보존 · 독립 복사본에서 작업 · 지원 범위 내 양방향 변환</text>
+    <text x="540" y="337" fill="#9b8981" font-size="12">개념도 — 실제 앱 화면이 아닙니다</text>
+  </g>
+</svg>

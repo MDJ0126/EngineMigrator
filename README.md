@@ -15,6 +15,10 @@ Windows용 Unity ↔ Unreal 프로젝트 포팅 도구입니다. 장면·리소�
 
 **개발 프리뷰입니다.** 전체 게임·임의 코드·모든 엔진 버전의 자동 포팅은 아직 완성되지 않았습니다. 지원하지 않는 항목은 차단 사유로 기록합니다.
 
+<p align="center">
+  <img src="docs/assets/migration-flow.svg" width="900" alt="Unity ↔ EngineMigrator ↔ Unreal: 독립 복사본에서 지원 항목을 변환하고 객체·참조 대응표와 결과 보고서를 확인하는 흐름">
+</p>
+
 ## 주요 기능
 
 - **장면과 리소스** — 계층·Transform, 기본 메시·텍스처·머티리얼, 카메라·조명과 일부 환경 설정 이전
